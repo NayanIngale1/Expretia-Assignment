@@ -5,7 +5,7 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
-import { jobReducer } from "./JobReducer/JobReducer";
+import { jobReducer } from "./JobReducer/jobReducer";
 import { userReducer } from "./UserReducer/userReducer";
 
 const rootReducer = combineReducers({
