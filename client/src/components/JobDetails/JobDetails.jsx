@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+import { setUpdateUser } from "../../Redux/UserReducer/actions";
 import "./JobDetails.css";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 const JobDetails = () => {
   const [data, setData] = useState({});
-  const { user } = useSelector((state) => state.user);
+  const { user,isLoggedIn } = useSelector((state) => state.user);
 
   const { id } = useParams();
 
@@ -15,6 +15,48 @@ const JobDetails = () => {
       .then((res) => res.json())
       .then((res) => setData(res));
   }, []);
+
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const applyForJob = () => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else if (
+      !user.highest_qualification ||
+      !user.specialization ||
+      !user.relocate ||
+      !user.gender ||
+      !user.experience ||
+      !user.resume
+    ) {
+      navigate("/editprofile");
+    } else {
+      fetch(
+        `https://get-it-job.herokuapp.com/user/${user._id}/applyjob/${data._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("res:", res);
+          if (res.message == undefined) {
+            dispatch(setUpdateUser(res));
+            alert("Application submitted succefully..!");
+          } else {
+            alert(res.message);
+          }
+        });
+    }
+  };
+
+
+
 
   return (
     <div className="JobDetails__wrapper">
@@ -40,6 +82,7 @@ const JobDetails = () => {
             : "btn__element apply__btn"
         }
         disabled={user?.applied_jobs?.includes(data._id)}
+        onClick={()=>{applyForJob()}}
       >
         APPLY
       </button>

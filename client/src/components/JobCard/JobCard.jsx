@@ -3,13 +3,53 @@ import React from "react";
 import "./JobCard.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { applyForJob } from "../../utils/applyForJob";
+import { setUpdateUser } from "../../Redux/UserReducer/actions";
+
+
 
 const JobCard = ({ data }) => {
   const { user, isLoggedIn } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+ const applyForJob = () => {
+  if (!isLoggedIn) {
+    navigate("/login");
+  } else if (
+    !user.highest_qualification ||
+    !user.specialization ||
+    !user.relocate ||
+    !user.gender ||
+    !user.experience ||
+    !user.resume
+  ) {
+    navigate("/editprofile");
+  } else {
+    fetch(
+      `https://get-it-job.herokuapp.com/user/${user._id}/applyjob/${data._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("res:", res);
+        if (res.message == undefined) {
+          dispatch(setUpdateUser(res));
+          alert("Application submitted succefully..!");
+        } else {
+          alert(res.message);
+        }
+      });
+  }
+};
+
+
+  
   return (
     <div className="jobcard__wrapper">
       <p>{data.category}</p>
@@ -32,7 +72,7 @@ const JobCard = ({ data }) => {
               : "btn__element apply__btn"
           }
           disabled={user?.applied_jobs?.includes(data._id)}
-          onClick={() => applyForJob(user, isLoggedIn, navigate, data._id)}
+          onClick={() => applyForJob()}
         >
           APPLY
         </button>

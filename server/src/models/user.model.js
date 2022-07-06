@@ -40,7 +40,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
     },
-    applied_jobs: [{ type: String, required: false }]
+    applied_jobs: []
   },
   {
     versionKey: false,

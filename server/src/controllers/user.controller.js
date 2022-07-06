@@ -91,23 +91,16 @@ const updateUserProfile = async (req, res) => {
 
 const appliedForJob = async (req, res) => {
   console.log('req:', req.params)
-  try {
-
-    const test = await User.updateOne(
-      { _id: req.params.userid },
-      { $push: { applied_jobs: req.params.jobid } },
-    );
-    if (test.acknowledged === true) {
-      const user = await User.findById(req.params.id).lean().exec();
-      return res.status(201).send(user);
-    }
-    return res
-      .status(404)
-      .send({ data: test, message: "error", error: "something went wrong" });
-  } catch (error) {
-    console.log("error:", error);
-    res.status(500).send({ data: [], message: "error", error: error.message });
-  }
+    const test = await User.findByIdAndUpdate( req.params.userid, { $push: { applied_jobs: req.params.jobid } },{new:true});
+    console.log('test:', test)   
+        
+     if (test) {
+       return res.status(201).send(test);
+     } else {
+       return res
+         .status(500)
+         .send({ message: "Invalid email or Password", status: "Failed" });
+     }
 };
 
 module.exports = { registerUser,authUser,appliedForJob, getUserProfile, getUsers,updateUserProfile, generateToken };

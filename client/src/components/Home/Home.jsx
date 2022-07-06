@@ -28,7 +28,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setData(jobs.jobs);
+    setData(jobs.jobs || []);
   }, [jobs.jobs]);
 
   return (
