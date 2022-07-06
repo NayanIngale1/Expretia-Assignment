@@ -12,15 +12,17 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProducts(`http://localhost:8080/jobs/all`));
+    dispatch(getProducts(`https://get-it-job.herokuapp.com/jobs/all`));
   }, []);
 
   const filterHandle = (e) => {
     if (e.target.value == "all") {
-      dispatch(getProducts(`http://localhost:8080/jobs/all`));
+      dispatch(getProducts(`https://get-it-job.herokuapp.com/jobs/all`));
     } else {
       dispatch(
-        getProducts(`http://localhost:8080/jobs/category/${e.target.value}`)
+        getProducts(
+          `https://get-it-job.herokuapp.com/jobs/category/${e.target.value}`
+        )
       );
     }
   };

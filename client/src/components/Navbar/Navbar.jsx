@@ -11,14 +11,20 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const getSearchResult = () => {
-    dispatch(getProducts(`http://localhost:8080/jobs/all?keyword=${search}`));
+    dispatch(
+      getProducts(`https://get-it-job.herokuapp.com/jobs/all?keyword=${search}`)
+    );
   };
 
   useEffect(() => {
     let id;
     clearTimeout(id);
     id = setTimeout(() => {
-      dispatch(getProducts(`http://localhost:8080/jobs/all?keyword=${search}`));
+      dispatch(
+        getProducts(
+          `https://get-it-job.herokuapp.com/jobs/all?keyword=${search}`
+        )
+      );
     }, 800);
   }, [search]);
 
@@ -28,7 +34,11 @@ const Navbar = () => {
         <Link to="/">Get-IT-Job</Link>
       </div>
 
-      {isLoggedIn && <Link to="/editprofile" className="navbar__list_item">Edit Profile</Link>}
+      {isLoggedIn && (
+        <Link to="/editprofile" className="navbar__list_item">
+          Edit Profile
+        </Link>
+      )}
       <div className="navbar__serach">
         <input
           className="navbar__input"

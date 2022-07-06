@@ -13,7 +13,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleregister = () => {
-    fetch("http://localhost:8080/user/register", {
+    fetch("https://get-it-job.herokuapp.com/user/register", {
       method: "POST",
       body: JSON.stringify(logindata),
       headers: {

@@ -13,18 +13,21 @@ export const applyForJob = (user, isLoggedIn, navigate, jobId) => {
   ) {
     navigate("/editprofile");
   } else {
-    fetch(`http://localhost:8080/user/${user._id}/applyjob/${jobId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `https://get-it-job.herokuapp.com/user/${user._id}/applyjob/${jobId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((res) => {
         console.log("res:", res);
         if (res.message == undefined) {
-            dispatch(setUpdateUser(res));
-            alert("Application submitted succefully..!")
+          dispatch(setUpdateUser(res));
+          alert("Application submitted succefully..!");
         } else {
           alert(res.message);
         }

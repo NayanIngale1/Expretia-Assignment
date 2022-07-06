@@ -1,46 +1,43 @@
-import React,{useState} from 'react'
-import "./EditProfile.css"
-import{useSelector,useDispatch} from 'react-redux'
+import React, { useState } from "react";
+import "./EditProfile.css";
+import { useSelector, useDispatch } from "react-redux";
 import { setUpdateUser } from "../../Redux/UserReducer/actions";
 import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
-  const { user } = useSelector(state => state.user);
-  const [data,setData] = useState(user)
-
+  const { user } = useSelector((state) => state.user);
+  const [data, setData] = useState(user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleEdit = (e) => {
-    
     if (e.target.name == "relocate") {
       setData({ ...data, relocate: e.target.checked });
     } else {
-      setData({...data,[e.target.name] : e.target.value})
+      setData({ ...data, [e.target.name]: e.target.value });
     }
-  }
-
+  };
 
   const handleupdateProfile = () => {
-     fetch(`http://localhost:8080/user/update/${user._id}`, {
-       method: "PATCH",
-       body: JSON.stringify(data),
-       headers: {
-         "Content-Type": "application/json",
-       },
-     })
-       .then((res) => res.json())
-       .then((res) => {
-         console.log("res:", res);
-         if (res.message == undefined) {
-           dispatch(setUpdateUser(res));
-           navigate("/");
-         } else {
-           alert(res.message);
-         }
-       });
-  }
+    fetch(`https://get-it-job.herokuapp.com/user/update/${user._id}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("res:", res);
+        if (res.message == undefined) {
+          dispatch(setUpdateUser(res));
+          navigate("/");
+        } else {
+          alert(res.message);
+        }
+      });
+  };
   return (
     <div className="editprofile__wrapper">
       <label>
@@ -141,10 +138,10 @@ const EditProfile = () => {
         Yes.
       </label>
       <button className="btn__element" onClick={() => handleupdateProfile()}>
-     UPDATE PROFILE
+        UPDATE PROFILE
       </button>
     </div>
   );
-}
+};
 
-export default EditProfile
+export default EditProfile;

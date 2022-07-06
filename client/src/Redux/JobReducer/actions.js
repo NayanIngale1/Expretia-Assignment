@@ -18,18 +18,10 @@ export const setJobsError = (err)=>{
 
 
 export const getProducts = (url) => (dispatch) => {
-  dispatch(getJobs());
-    // let url;
-    // if(keyword && category){
-    //     url = `http://localhost:8080/jobs/all?keyword=${keyword}&category=${category}`
-    // }else if(keyword){
-    //     url = `http://localhost:8080/jobs/all?keyword=${keyword}`;
-    // } else {
-    //     url = `http://localhost:8080/jobs/all`;
-    // }
-    
-  fetch(url)
-    .then((res) => res.json())
-    .then((res) => dispatch(setJobs(res)))
-    .catch((err) => dispatch(setJobsError(err)));
-};
+    dispatch(getJobs());
+      
+    fetch(url)
+        .then((res) => res.json())
+        .then((res) => dispatch(setJobs(res)))
+        .catch((err) => dispatch(setJobsError(err)));
+}
