@@ -2,53 +2,51 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 
-const userSchema= mongoose.Schema({
-
+const userSchema = mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-    isProfessional : {
-        type: Boolean,
-        required: true,
-        default: false,
+    isProfessional: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     highest_qualification: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     specialization: {
-        type: String,
-        required: false
+      type: String,
+      required: false,
     },
     relocate: {
-        type: Boolean,
-        required: false
+      type: Boolean,
+      required: false,
     },
-    gender: { type: String ,
-        required: false
-    },
-    experience:{type:Number,
-        required: false
-    },
+    gender: { type: String, required: false },
+    experience: { type: Number, required: false },
     resume: {
-        type: String,
-        required: false
-    },    
-    
-},{
+      type: String,
+      required: false,
+    },
+    applied_jobs: [{ type: String, required: false }]
+  },
+  {
     versionKey: false,
-    timestamps: true
-})
+    timestamps: true,
+  }
+);
 
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")){  //we also have update profile functionality => there is smeone change user name , email etc, even then password will get hash, then user won't be able to login. So that we don't want

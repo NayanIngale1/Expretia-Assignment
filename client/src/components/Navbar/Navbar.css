@@ -1,0 +1,52 @@
+.navbar__wrapper{
+    height:80px;
+    background-color:gray;
+    display:flex;
+   align-items:center;
+   padding:0px 20px;
+   width:100%;
+   justify-content:space-around;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.navbar__wrapper>div{
+    margin-right:20px;
+}
+
+.navbar__logo{
+    font-size:30px;
+    font-weight:700;
+    color:white;
+    text-decoration:underline;    
+}
+
+.navbar__list_item,.navbar__login,.navbar__serch__btn{
+    border:2px solid white;
+    padding:10px 20px;
+    color:white;
+    font-weight:600;
+    background:gray;
+    transition: all 0.3s ease-in-out;
+}
+.navbar__list_item:hover,.navbar__login:hover,.navbar__serch__btn:hover{
+    background:black;
+}
+
+.navbar__serach{
+    background-color:white;
+    border:2px solid white;
+    display:flex;
+    align-items:center;
+}
+.navbar__input{
+    background-color:none;
+    border:none;
+    outline:none;
+    padding:10px 20px;
+    font-size:16px;
+    width:300px;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}

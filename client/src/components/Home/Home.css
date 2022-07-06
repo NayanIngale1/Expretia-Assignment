@@ -1,0 +1,12 @@
+.Hoome__wrapper{
+    padding:20px 30px;
+}
+
+.job__listing{
+    
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  /* border: 1px solid black; */
+
+}

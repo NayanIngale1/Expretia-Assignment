@@ -10,6 +10,7 @@ const {
   getUserProfile,
   getUsers,
   updateUserProfile,
+  appliedForJob,
   generateToken,
 } = require("./controllers/user.controller");
 
@@ -24,6 +25,7 @@ app.post("/user/login", authUser);
 app.get("/user/get/:id", getUserProfile);
 app.get("/user/get/all", getUsers);
 app.patch("/user/update/:id", updateUserProfile);
+app.patch("/user/:userid/applyjob/:jobid", appliedForJob);
 
 // app.use("/jobapplications");
 

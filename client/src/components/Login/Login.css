@@ -1,0 +1,19 @@
+.login__wrapper{
+    margin:3rem auto;
+    width:420px;
+    border:1px solid #fefefe;
+    padding:2rem;
+    display:flex;
+    /* align-items:center; */
+    flex-direction:column;
+    gap:20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.input__element{
+    background-color:none;
+    border:none;
+    border-bottom:1px solid gray;
+    outline:none;
+    padding:10px 20px;
+    font-size:16px; 
+}

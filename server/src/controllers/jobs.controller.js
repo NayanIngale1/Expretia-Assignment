@@ -11,13 +11,23 @@ router.get("/all",async(req,res)=>{
         const limit = 10;
         const skip = (page - 1) * limit;
 
+        
          const keyword = req.query.keyword
-           ? {
-               title: {
-                 $regex: req.query.keyword,
-                 $options: "i", //i here means case insensitive
-               },
-             }
+           ? req.query.category ? {
+             title: {
+               $regex: req.query.keyword,
+               $options: "i", //i here means case insensitive
+             },
+             category: {
+               $regex: req.query.category,
+               $options: "i", //i here means case insensitive
+             },
+           } : {
+             title: {
+               $regex: req.query.keyword,
+               $options: "i", //i here means case insensitive
+             },
+           }
            : {};
         const jobs = await Job.find({ ...keyword }).skip(skip).limit(limit).lean().exec();
         
@@ -35,6 +45,7 @@ router.get("/all",async(req,res)=>{
         
     }
 })
+
 router.get("/category/:category",async(req,res)=>{
     try {
 
@@ -49,6 +60,20 @@ router.get("/category/:category",async(req,res)=>{
             jobs: jobs,
             count: Math.ceil(count / limit),
           });
+        
+    } catch (error) {
+        console.log("error:", error);
+        return res.status(500).json({ message: error.message, status: "Failed" });
+        
+        
+    }
+})
+
+router.get("/:id",async(req,res)=>{
+    try {
+
+        const job = await Job.findById(req.params.id)
+          return res.status(200).send(job);
         
     } catch (error) {
         console.log("error:", error);

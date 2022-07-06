@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const jwt = require("jsonwebtoken");
 
+
 const generateToken = (id) => {
   return jwt.sign({ id }, "JOB_SECRETE", { expiresIn: "30d" });
 };
@@ -8,7 +9,7 @@ const generateToken = (id) => {
 
 
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;  
+  const { name, email, password } = req.body; 
 
   const userExists = await User.findOne({ email: email });
   // console.log(user)
@@ -25,7 +26,7 @@ const registerUser = async (req, res) => {
   });
 
   if (user) {
-    res.status(201).json({
+   return res.status(201).json({
     user,
       token: generateToken(user._id),
     });
@@ -88,5 +89,25 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const appliedForJob = async (req, res) => {
+  console.log('req:', req.params)
+  try {
 
-module.exports = { registerUser,authUser, getUserProfile, getUsers,updateUserProfile, generateToken };
+    const test = await User.updateOne(
+      { _id: req.params.userid },
+      { $push: { applied_jobs: req.params.jobid } },
+    );
+    if (test.acknowledged === true) {
+      const user = await User.findById(req.params.id).lean().exec();
+      return res.status(201).send(user);
+    }
+    return res
+      .status(404)
+      .send({ data: test, message: "error", error: "something went wrong" });
+  } catch (error) {
+    console.log("error:", error);
+    res.status(500).send({ data: [], message: "error", error: error.message });
+  }
+};
+
+module.exports = { registerUser,authUser,appliedForJob, getUserProfile, getUsers,updateUserProfile, generateToken };

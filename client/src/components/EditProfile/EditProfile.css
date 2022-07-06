@@ -1,0 +1,15 @@
+.editprofile__wrapper{
+     margin:3rem auto;
+    width:450px;
+    border:1px solid #fefefe;
+    padding:2rem;
+    display:flex;
+    /* align-items:center; */
+    flex-direction:column;
+    gap:20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.editprofile__wrapper input{
+    margin-left:10px;
+}
